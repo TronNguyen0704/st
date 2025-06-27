@@ -59,16 +59,16 @@ const NexusHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-lg border-b border-border/50">
+    <header className="absolute top-0 z-50 w-full">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           <NexusLogo />
           
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-muted-foreground">
+          <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-white/80">
             {navItems.map(item => (
               item.subItems ? (
                 <DropdownMenu key={item.label}>
-                  <DropdownMenuTrigger className="hover:text-primary transition-colors outline-none">{item.label}</DropdownMenuTrigger>
+                  <DropdownMenuTrigger className="hover:text-white transition-colors outline-none">{item.label}</DropdownMenuTrigger>
                   <DropdownMenuContent>
                     {item.subItems.map(subItem => (
                       <DropdownMenuItem key={subItem.label} asChild>
@@ -78,27 +78,27 @@ const NexusHeader = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <Link key={item.label} href={item.href || '#'} className="hover:text-primary transition-colors">{item.label}</Link>
+                <Link key={item.label} href={item.href || '#'} className="hover:text-white transition-colors">{item.label}</Link>
               )
             ))}
           </nav>
           
           <div className="hidden md:flex items-center gap-2">
-            <Button variant="outline" size="sm">Sign In</Button>
+            <Button variant="outline" size="sm" className="text-white border-white/30 hover:bg-white/10 hover:text-white">Sign In</Button>
             <Button size="sm">Get Started</Button>
-            <ThemeToggle />
-            <Button variant="ghost" size="icon"><Bell className="h-5 w-5"/></Button>
+            <ThemeToggle className="text-white/80 hover:text-white hover:bg-white/10" />
+            <Button variant="ghost" size="icon" className="text-white/80 hover:text-white hover:bg-white/10"><Bell className="h-5 w-5"/></Button>
           </div>
 
           <div className="md:hidden">
-            <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white hover:bg-white/10">
               {isMenuOpen ? <X /> : <Menu />}
             </Button>
           </div>
         </div>
       </div>
       {isMenuOpen && (
-        <div className="md:hidden bg-background border-t border-border/50">
+        <div className="md:hidden bg-background/90 backdrop-blur-lg border-t border-border/50">
           <nav className="flex flex-col gap-4 p-4">
           {navItems.map(item => (
             <div key={item.label}>
@@ -168,7 +168,7 @@ const NexusFooter = () => {
 }
 
 const TechSpotlightCard = ({ title, description, imageUrl, imageHint }: { title: string; description: string; imageUrl: string; imageHint: string; }) => (
-  <motion.div whileHover={{ y: -5, boxShadow: "0px 10px 20px hsla(170, 100%, 44%, 0.1)" }}>
+  <motion.div whileHover={{ y: -5, boxShadow: "0px 10px 20px hsla(30, 85%, 65%, 0.1)" }}>
     <Card className="h-full overflow-hidden bg-card/50">
       <Image src={imageUrl} alt={title} width={600} height={400} className="w-full h-48 object-cover" data-ai-hint={imageHint} />
       <CardContent className="p-6">
@@ -180,7 +180,7 @@ const TechSpotlightCard = ({ title, description, imageUrl, imageHint }: { title:
 );
 
 const SportsPulseCard = ({ title, description, imageUrl, imageHint }: { title: string; description: string; imageUrl: string; imageHint: string; }) => (
-  <motion.div whileHover={{ y: -5, boxShadow: "0px 10px 20px hsla(170, 100%, 44%, 0.1)" }}>
+  <motion.div whileHover={{ y: -5, boxShadow: "0px 10px 20px hsla(30, 85%, 65%, 0.1)" }}>
     <Card className="h-full overflow-hidden bg-card/50 relative">
       <Image src={imageUrl} alt={title} width={600} height={400} className="w-full h-full object-cover" data-ai-hint={imageHint} />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
@@ -199,7 +199,7 @@ export default function HomePage() {
       <main className="flex-1">
         {/* Hero Section */}
         <section className="relative h-[80vh] flex items-center justify-center text-center text-white overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0A192F] to-[#5E2AB2] animate-[pulse_10s_ease-in-out_infinite] opacity-80"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#4d2c1d] to-[#b45309] animate-[pulse_10s_ease-in-out_infinite] opacity-80"></div>
           <div className="relative z-10 p-4">
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
