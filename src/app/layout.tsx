@@ -1,18 +1,11 @@
-"use client";
-
 import type { Metadata } from 'next';
-import { usePathname } from 'next/navigation';
 import './globals.css';
-import { SidebarProvider, Sidebar, SidebarInset, SidebarHeader, SidebarContent, SidebarFooter } from '@/components/ui/sidebar';
-import { MainNav } from '@/components/main-nav';
-import { UserNav } from '@/components/user-nav';
-import { Logo } from '@/components/logo';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from '@/components/theme-provider';
+import { AppShell } from './app-shell';
 
-// Metadata can still be exported from a client component layout
 export const metadata: Metadata = {
-  title: 'TechSport Central',
+  title: 'Nexus Horizon',
   description: 'A seamless fusion of real-time tech trends and dynamic sports coverage, built for enthusiasts and professionals alike.',
 };
 
@@ -21,9 +14,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pathname = usePathname();
-  const isHomePage = pathname === '/';
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -38,28 +28,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {isHomePage ? (
-            <div className="dark">
-              {children}
-            </div>
-          ) : (
-            <SidebarProvider>
-              <Sidebar>
-                <SidebarHeader>
-                  <Logo />
-                </SidebarHeader>
-                <SidebarContent>
-                  <MainNav />
-                </SidebarContent>
-                <SidebarFooter>
-                  <UserNav />
-                </SidebarFooter>
-              </Sidebar>
-              <SidebarInset>
-                {children}
-              </SidebarInset>
-            </SidebarProvider>
-          )}
+          <AppShell>{children}</AppShell>
           <Toaster />
         </ThemeProvider>
       </body>
