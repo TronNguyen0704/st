@@ -56,31 +56,11 @@ const simulateMatchFlow = ai.defineFlow(
     inputSchema: SimulateMatchInputSchema,
     outputSchema: SimulateMatchOutputSchema,
   },
-  async input => {
-    const {output} = await ai.generate({
-      prompt: `Predict the outcome of a match between ${input.team1} and ${input.team2} in ${input.sport}.  ${input.context ? `Additional context: ${input.context}` : ''}`,
-      model: 'googleai/gemini-2.0-flash',
-      config: {
-        safetySettings: [
-          {
-            category: 'HARM_CATEGORY_HATE_SPEECH',
-            threshold: 'BLOCK_ONLY_HIGH',
-          },
-          {
-            category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
-            threshold: 'BLOCK_NONE',
-          },
-          {
-            category: 'HARM_CATEGORY_HARASSMENT',
-            threshold: 'BLOCK_MEDIUM_AND_ABOVE',
-          },
-          {
-            category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
-            threshold: 'BLOCK_LOW_AND_ABOVE',
-          },
-        ],
-      },
-    });
-    return {predictedWinner: 'TBD', scorePrediction: 'TBD', analysis: output!.text};
+  async (input) => {
+    return {
+      predictedWinner: '',
+      scorePrediction: '',
+      analysis: '',
+    };
   }
 );

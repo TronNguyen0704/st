@@ -1,3 +1,5 @@
+"use client";
+
 import { Rocket } from "lucide-react";
 import { useSidebar } from "./ui/sidebar";
 import { cn } from "@/lib/utils";

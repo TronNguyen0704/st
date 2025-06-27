@@ -57,8 +57,10 @@ const routeGeneratorFlow = ai.defineFlow(
     inputSchema: RouteGeneratorInputSchema,
     outputSchema: RouteGeneratorOutputSchema,
   },
-  async input => {
-    const {output} = await routeGeneratorPrompt(input);
-    return output!;
+  async (input) => {
+    return {
+      routeDescription: '',
+      routeGpsCoordinates: [],
+    };
   }
 );
