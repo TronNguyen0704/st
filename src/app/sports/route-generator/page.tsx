@@ -3,7 +3,7 @@ import { RouteGeneratorForm } from "./components/route-generator-form";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Route Generator | TechSport Central",
+    title: "Route Generator | TechSport Pulse",
     description: "Generate personalized running or cycling routes for your next workout.",
 };
 

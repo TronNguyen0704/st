@@ -3,7 +3,7 @@ import { MatchSimulatorForm } from "./components/match-simulator-form";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Match Simulator | TechSport Central",
+    title: "Match Simulator | TechSport Pulse",
     description: "Predict game outcomes with our AI-powered simulation tool.",
 };
 

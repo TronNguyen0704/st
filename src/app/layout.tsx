@@ -5,8 +5,8 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { AppShell } from './app-shell';
 
 export const metadata: Metadata = {
-  title: 'Nexus Horizon',
-  description: 'A seamless fusion of real-time tech trends and dynamic sports coverage, built for enthusiasts and professionals alike.',
+  title: 'TechSport Pulse',
+  description: 'Where Innovation Meets Passion. The ultimate hub for tech trends and sports analytics.',
 };
 
 export default function RootLayout({
@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className="font-body antialiased">
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
