@@ -43,38 +43,38 @@ body {
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
   .dark {
-    --background: 202 30% 12%;
-    --foreground: 190 75% 93%;
-    --card: 202 30% 15%;
-    --card-foreground: 190 75% 93%;
-    --popover: 202 30% 15%;
-    --popover-foreground: 190 75% 93%;
-    --primary: 197 76% 52%;
-    --primary-foreground: 202 30% 10%;
-    --secondary: 202 30% 20%;
-    --secondary-foreground: 190 75% 93%;
-    --muted: 202 30% 20%;
-    --muted-foreground: 190 40% 70%;
-    --accent: 25 100% 65%;
-    --accent-foreground: 25 50% 10%;
+    --background: 222 67% 11%;
+    --foreground: 210 40% 98%;
+    --card: 222 50% 15%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 50% 15%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 170 100% 44%;
+    --primary-foreground: 222 67% 11%;
+    --secondary: 222 50% 20%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 222 50% 20%;
+    --muted-foreground: 220 15% 65%;
+    --accent: 170 100% 44%;
+    --accent-foreground: 222 67% 11%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 202 30% 25%;
-    --input: 202 30% 25%;
-    --ring: 197 76% 52%;
+    --border: 222 50% 25%;
+    --input: 222 50% 25%;
+    --ring: 170 100% 44%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --sidebar-background: 202 30% 15%;
-    --sidebar-foreground: 190 75% 93%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 202 30% 20%;
-    --sidebar-accent-foreground: 190 75% 93%;
-    --sidebar-border: 202 30% 25%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 222 67% 11%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 170 100% 44%;
+    --sidebar-primary-foreground: 222 67% 11%;
+    --sidebar-accent: 222 50% 20%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 222 50% 25%;
+    --sidebar-ring: 170 100% 44%;
   }
 }
 
