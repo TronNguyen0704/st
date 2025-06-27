@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/carousel";
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 const TechSportLogo = ({ className }: { className?: string }) => (
   <Link href="/" className={cn("flex items-center gap-2", className)}>
@@ -89,6 +90,7 @@ const TechSportHeader = () => {
           <div className="hidden md:flex items-center gap-2">
             <Button variant="ghost" size="icon"><Search className="h-5 w-5"/></Button>
             <Button variant="ghost" size="icon"><User className="h-5 w-5"/></Button>
+            <ThemeToggle />
           </div>
 
           <div className="md:hidden">
@@ -115,6 +117,7 @@ const TechSportHeader = () => {
           <div className="p-4 border-t flex items-center justify-center gap-4">
              <Button variant="ghost" size="icon"><Search className="h-5 w-5"/></Button>
             <Button variant="ghost" size="icon"><User className="h-5 w-5"/></Button>
+            <ThemeToggle />
           </div>
         </div>
       )}
