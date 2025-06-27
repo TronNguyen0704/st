@@ -1,0 +1,212 @@
+"use client";
+
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Loader2, MapPinned, Route } from "lucide-react";
+import { routeGeneratorAction } from "../actions";
+import type { RouteGeneratorOutput } from "@/ai/flows/route-generator";
+import { ScrollArea } from "@/components/ui/scroll-area";
+
+const formSchema = z.object({
+  startLatitude: z.coerce.number().min(-90).max(90),
+  startLongitude: z.coerce.number().min(-180).max(180),
+  distance: z.coerce.number().positive("Distance must be a positive number."),
+  activityType: z.enum(['running', 'cycling']),
+  difficulty: z.enum(['easy', 'moderate', 'hard']),
+});
+
+export function RouteGeneratorForm() {
+  const [result, setResult] = useState<RouteGeneratorOutput | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      startLatitude: 40.7128,
+      startLongitude: -74.0060,
+      distance: 5,
+      activityType: 'running',
+      difficulty: 'moderate',
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+    setResult(null);
+    setError(null);
+    try {
+      const res = await routeGeneratorAction(values);
+      setResult(res);
+    } catch (e) {
+      setError("An error occurred during route generation. Please try again.");
+      console.error(e);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  return (
+    <div className="space-y-8">
+      <Card>
+        <CardHeader>
+          <CardTitle>Route Parameters</CardTitle>
+          <CardDescription>Fill in the details to generate a custom route.</CardDescription>
+        </CardHeader>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <CardContent className="space-y-4">
+              <div className="grid md:grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="startLatitude"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Start Latitude</FormLabel>
+                      <FormControl>
+                        <Input type="number" step="any" placeholder="e.g., 40.7128" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="startLongitude"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Start Longitude</FormLabel>
+                      <FormControl>
+                        <Input type="number" step="any" placeholder="e.g., -74.0060" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <FormField
+                control={form.control}
+                name="distance"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Distance (km)</FormLabel>
+                    <FormControl>
+                      <Input type="number" placeholder="e.g., 10" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="grid md:grid-cols-2 gap-4">
+                 <FormField
+                  control={form.control}
+                  name="activityType"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Activity Type</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger><SelectValue placeholder="Select an activity" /></SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="running">Running</SelectItem>
+                          <SelectItem value="cycling">Cycling</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                 <FormField
+                  control={form.control}
+                  name="difficulty"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Difficulty</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger><SelectValue placeholder="Select a difficulty" /></SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="easy">Easy</SelectItem>
+                          <SelectItem value="moderate">Moderate</SelectItem>
+                          <SelectItem value="hard">Hard</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button type="submit" disabled={isLoading} className="w-full">
+                {isLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generating...</> : "Generate Route"}
+              </Button>
+            </CardFooter>
+          </form>
+        </Form>
+      </Card>
+
+      {error && (
+        <Card className="border-destructive bg-destructive/10">
+          <CardHeader><CardTitle className="text-destructive">Generation Failed</CardTitle></CardHeader>
+          <CardContent><p>{error}</p></CardContent>
+        </Card>
+      )}
+
+      {result && (
+        <Card className="animate-in fade-in-50">
+          <CardHeader className="items-center text-center">
+            <Route className="h-12 w-12 text-primary" />
+            <CardTitle className="text-2xl pt-2">Generated Route</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div>
+              <p className="text-sm text-muted-foreground mb-2 text-center">AI Route Description</p>
+              <div className="p-4 bg-muted/50 rounded-lg text-foreground/80 prose prose-sm max-w-none">
+                <p>{result.routeDescription}</p>
+              </div>
+            </div>
+             <div>
+                <p className="text-sm text-muted-foreground mb-2 text-center">GPS Coordinates</p>
+                 <ScrollArea className="h-72 w-full rounded-md border">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead className="w-[100px]">Point</TableHead>
+                                <TableHead>Latitude</TableHead>
+                                <TableHead>Longitude</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {result.routeGpsCoordinates.map((coord, index) => (
+                                <TableRow key={index}>
+                                    <TableCell className="font-medium">{index + 1}</TableCell>
+                                    <TableCell>{coord.latitude.toFixed(6)}</TableCell>
+                                    <TableCell>{coord.longitude.toFixed(6)}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                 </ScrollArea>
+                  <p className="text-xs text-muted-foreground mt-2 text-center">
+                    <MapPinned className="inline-block h-4 w-4 mr-1"/>
+                    Hint: Use these coordinates with a map application to visualize the route.
+                  </p>
+             </div>
+          </CardContent>
+        </Card>
+      )}
+    </div>
+  );
+}
